@@ -1,0 +1,351 @@
+<!doctype html>
+
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=en><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang=en><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang=en><![endif]-->
+
+<!--[if gt IE 8]><!--> <html class=no-js lang=en> <!--<![endif]-->
+<head>
+	<meta charset=utf-8>
+	
+	
+	<link rel=dns-prefetch href="//ajax.googleapis.com">
+	<link rel=dns-prefetch href="//google-analytics.com">
+	<link rel=dns-prefetch href="//vjs.zencdn.net">
+
+	
+	<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+	
+	<meta name=description content="">
+	
+	
+	<meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no">
+	
+	
+	
+	
+	
+	<meta name=apple-mobile-web-app-capable content=yes>
+	
+	<meta name=apple-mobile-web-app-status-bar-style content=black>
+	
+	
+	
+   <link rel=stylesheet href='/_css/15e2dfdfb7d876b69763.css'>
+   <link rel=stylesheet href='/_css/diabox.css'>
+   <link href="http://vjs.zencdn.net/c/video-js.css" rel=stylesheet>
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>	
+	<script src="/_js/libs/modernizr-2.5.3.min.js"></script>
+	
+	
+</head>
+<body class=films>
+	
+	<div id=preloading></div>
+
+	<div id=container>
+
+	    <h1 id=logo-overlay>Vifi 2.0</h1>
+
+		<header>
+
+			<div id=title>
+				<h1 class=red>Vifi 2.0</h1>
+			</div>
+			
+			<nav id=navTop class="headernav clearfix">
+				<ul>
+					<li><a href="/site/web" class=selected>Films</a></li>
+					<li><a href="/company/">Company</a></li>
+				</ul>
+			</nav> 
+			
+			<div id=menuContainer>
+
+				<nav id=navInpage data-menulevel=1 class="headernav clearfix">
+					<ul>
+						<li><a id=a_all href="/all">all</a></li>
+						<li><a id=a_genre_new href="#navNew">New stuff</a></li>
+<!--
+						<li class=hasOptions><a id=a_director href="#navDirector">by Director<span class="arrow right"></span></a></li>
+	-->
+					<li class=hasOptions><a id=a_genre href="#navGenre">by Genre<span class="arrow right"></span></a></li>
+					</ul>
+				</nav> 
+				
+				<nav id=navDirector data-menulevel=2 class="headernav options clearfix">
+					<ul>
+						<div class=col>
+							<li class=backlink><a href="#navFilms"><span class="arrow left"></span></a></li>
+	
+   <? foreach ((array)$directors as $director) {
+   
+   echo '<li><a id="a_director_' . strtolower(str_replace(" ", "-", $director)) . '" href="/director/' . strtolower(str_replace(" ", "-", $director)) . '">' . $director . '</a></li>';
+ }
+?>
+
+						</div>
+					</ul>
+				</nav> 
+				
+				<nav id=navGenre data-menulevel=2 class="headernav options clearfix">
+					<ul>
+						<div class=col>
+							<li class=backlink><a href="#navFilms"><span class="arrow left"></span></a></li>
+							<li><a id=a_genre_action href="/genre/action">Action</a></li>
+   <? foreach ((array)$genres as $genre) {
+
+   echo '<li><a id=a_genre_' . strtolower(str_replace(" ", "-", $genre->name)) . ' href="/genre/' .  strtolower(str_replace(" ", "-",$genre->name)) . '">' . $genre->name . '</a></li>';
+ }
+
+?>
+						</div>
+					</ul>
+				</nav> 
+			
+			</div> 
+
+		</header>
+		
+		<div id=main role=main>
+                
+			<section id=films class="content clearfix">
+				
+   <?
+   foreach($titles as $data) {
+   $i++;
+   if ($i > 30) continue;
+
+  ?>
+ <article class="loading" data-title="<?=$data["title"];?>" data-year="<?=substr($data["year"],2,1);?>0's" data-genre="<?=$data["genres"];?>"   data-status="<?=$data["approved"];?>" data-director="<?=$data["director"];?>" data-directorkey="<?=strtolower(str_replace(" ", "-",$data["director"]))?>"  data-genrekeys="<?=str_replace(" ", "-", strtolower($data["genres"]));?>" data-genreKey="<?=str_replace(" ", "-", strtolower($data["genres"]));?>" data-movieKey="<?=$data["basename"];?>" data-isNew="<?=$data["isnew"];?>">
+
+					<div class="frame">
+						<div class="thumbCont">
+<a href="api/movie/<?=$data["basename"];?>" title="Details">
+								<img class="thumb" data-src="<?=$data["thumbnail"]?>" src="/_img/empty.gif" />
+</a>
+						</div>
+					</div>
+					<span class="thumbFlag">new</span>
+					<div class="overlay">
+						<a href="#" class="btn play">Play</a>
+<h1 class="director"><?=$data["title"];?></h1>
+<p class="client"><?=$data["year"];?>	</p>
+<p class="title"><?=$data["director"];?></p>
+					</div>
+	
+				</article>
+<?
+ }
+?>
+
+			</section> 
+
+		</div> 
+		
+			
+
+
+		<div id=player>
+
+			
+			<div class=overlay>
+
+
+
+				<a href="#" class="btnFullWidth btnClose"><span class="btn close"></span><span class=label></span></a>
+
+
+				<div class=controls>
+
+   <a href="#" class="btn play">Play/Pause</a>
+   <div class=timeline>
+
+   <div class=buffer></div>
+   <div class=throttle></div>
+   </div>
+
+   <a href="#" class="btn sound">Sound</a>
+   <a href="#" class="btn fullscreen">Fullscreen</a>
+   <a href="#" class="btn quality">HQ is on</a>
+					
+   
+
+			</div> 
+</div>
+
+			<div class="videocont">
+
+   
+
+   
+   <div class="top">
+   <video id="bigscreen" class="video-js  vjs-rosas-skin" width="100%" height="100%" style="height:100%"></video>
+
+
+
+<div class="wrapper">
+        <div class="what"><a id="purchaselink" href="#purchaseModal" rel="diabox[purchase][800x450]" ><span class="grid trailer"></span><h3>Vaata filmi</h3>
+        </a></div>
+        <div class="what"><a href="#" id="trailerlink" rel="diabox[trailer]"><span class="grid watch"></span><h3>Trailer</h3></a>
+        </div>
+<div class="what"><a href="#" onClick="$$('div.gallery').getFirst().fireEvent('click'); return false;"> <span class="grid photos"></span><h3>Galerii</h3></a>
+        </div>
+
+      </div>
+   <a href="#" class="btn prev">Previous</a>
+   <a href="#" class="btn next">Next </a> 
+
+
+
+    <div class="description" style="left: 0px;">
+   <div class="info"></div>
+   <div class="overview"></div>
+   
+   </div>			
+</div>
+<div class="bottom">
+<div id="togglearea" class="togglearea">
+<div class="gallery"></div>
+<div class="details area">
+<ul></ul>
+</div>
+
+    <div class="cast area">
+
+    <ul>
+
+</ul>
+</div>
+
+<div id="togglemenu">
+<ul>
+<li><a class="toggle" id="details">Information</a></li>
+<li><a class="toggle" id="cast">Actors</a></li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</div></div>
+
+<div id="purchaseModal" style="display:none">
+<?
+include_once("payment.php");
+?>
+</div>
+
+		<footer>
+			<p>
+				<span class="line comma">Vificom OÜ</span><span class="line comma">Rottermanni 6</span><span class=line>10050 Tallinn</span>
+   <span class=nl><span class="line comma">Phone +372 00000</span><span class=line>E-mail <a href="mailto:tugi@vifi.ee">tugi@vifi.ee</a></span></span>
+			</p>
+		</footer>
+	
+	</div> 
+	
+	
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+
+
+	<script>
+		// fallback for video.js
+		window._V_ || document.write('<link href="/_js/libs/video-js/video-js.css" rel="stylesheet"><script src="/_js/libs/video-js/video.min.js">_V_.options.flash.swf = "/_js/libs/video-js/video-js.swf"<\/script>');
+		// fallback for mootools-core
+		window.MooTools || document.write('<script src="/_js/libs/mootools-core-1.4.5-full-nocompat-yc.js"><\/script>');
+		// load respond.js ONLY if neccessary
+		yepnope({
+			test:Modernizr.mq('only all'),
+			nope:'/_js/libs/respond.min.js'
+		});
+
+
+		// pass server side values to js
+		<!-- server side vals for js -->	
+		window.filmseed = 40;	</script>
+
+   <script type="text/javascript" src="/_js/diabox/diabox.min.js"></script>
+
+	<script src='/_js/048b3af145a982b500d4.js'></script>
+	<script type="text/javascript">
+                    function setTabs() {
+		      
+		      var menu = document.id('togglemenu');
+		      var el = menu.getElements("ul li a");
+		      Array.each(el, function(a) {
+			  var id = a.getAttribute("id");
+			  a.addEvent('click', function(event){
+			      var buttons = $$("#togglemenu li");
+				Array.each(buttons, function(bt) { bt.removeClass("selected");});
+				var button = document.id(id);
+				
+				button.getParent().addClass("selected");
+				
+				var area = document.id('togglearea');
+				var divs = area.getElements("div.area");
+				divs.fade("out").setStyle("display", "none");
+				var showdivs = $$("div."+id);
+				showdivs.setStyle("display", "block").fade('in');
+				
+				
+				
+			    })});
+		      $$("#togglemenu ul").getFirst().addClass("selected");
+
+		    }
+
+		window.addEvent('domready', function() {
+
+		    $$('form#code', addEvent('submit', function(e) { e.preventDefault(); diabox.hide(); window.player.switchToVideo();  return false; }));
+		    setTabs();
+		    window.diabox = new Diabox({gallery : {enabled : true}});
+		    //		    diabox.addEvent('diabox_hidden', diabox_close);      
+
+		    //  window.diabox = new Diabox({gallery : {enabled : true}});
+		  
+		/* ----------------------------------------------------------------------------
+			Grid/Thumbs
+			------------------------------------------------------------------------- */
+			// infobox
+			window.infobox = new Infobox($('films'));
+			// gird
+			window.grid = new Grid(
+				$('films'), 
+				$('container').getFirst('footer')
+			);
+		 /* ----------------------------------------------------------------------------
+			Menu/Navigation
+			------------------------------------------------------------------------- */
+			// menus
+			window.menuCtrl = new MenuCtrl($('menuContainer'));
+		 /* ----------------------------------------------------------------------------
+			Video Player
+			------------------------------------------------------------------------- */
+			// player 
+			window.player = new Player($('player'));
+			_V_("bigscreen", {
+			}, 
+			function() {
+				// Player (this) is initialized and ready.
+				window.player.libReady(this);
+			});
+		/* ----------------------------------------------------------------------------
+			History Controller
+			------------------------------------------------------------------------- */
+			window.historyCtrl = new HistoryCtrl();
+			window.historyCtrl.applyState();
+		 /* ----------------------------------------------------------------------------
+			hide preload layer
+			------------------------------------------------------------------------- */
+			$('preloading').dispose();
+		});
+
+		// Asynchronous Google Analytics snippet.
+		// mathiasbynens.be/notes/async-analytics-snippet 
+		
+	</script>
+</body>
+</html>
